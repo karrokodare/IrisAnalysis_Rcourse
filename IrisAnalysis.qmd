@@ -1,0 +1,63 @@
+---
+title: "IrisAnalysis"
+format: html
+editor: visual
+---
+
+
+## Install packages
+```{r}
+install.packages("renv")
+install.packages("tidyverse")
+```
+## Initialize renv for project
+
+```{r}
+library(renv)
+renv::init()
+
+
+renv::install(c("tidyverse", "ggpubr"))
+
+library(tidyverse)
+library(ggpubr)
+
+```
+
+## Load and explore data 
+
+```{r}
+data(iris)
+
+head(iris)
+summary(iris)
+str(iris)
+
+df <- tbl_df(iris)
+```
+## Data manipulation
+
+```{r}
+filter(df, Species == "versicolor")
+filter(df, Petal.Length > 6 & Sepal.Length > 7)
+arrange(df, Sepal.Length, Petal.Width)
+
+mutate(df, log.Sepal.length = log(Sepal.Length))
+
+group_by(df, Species) %>% count(n())
+
+df %>% 
+  group_by(Species) %>%
+  summarise(mean(Petal.Length))
+```
+
+## Data visualization 
+
+```{r}
+ggplot(data=df, aes(x = Sepal.Length, y = Sepal.Width))+
+  geom_point(aes(color=Species, shape=Species)) +
+  xlab("Sepal Length") +
+  ylab("Sepal Width") +
+  ggtitle("Sepal Length-Width")
+```
+
