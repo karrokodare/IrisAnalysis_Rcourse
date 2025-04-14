@@ -49,15 +49,21 @@ group_by(df, Species) %>% count(n())
 df %>% 
   group_by(Species) %>%
   summarise(mean(Petal.Length))
+
+write.csv(df, "results/df_iris.csv")
 ```
 
 ## Data visualization 
 
 ```{r}
-ggplot(data=df, aes(x = Sepal.Length, y = Sepal.Width))+
+plot <- ggplot(data=df, aes(x = Sepal.Length, y = Sepal.Width))+
   geom_point(aes(color=Species, shape=Species)) +
   xlab("Sepal Length") +
   ylab("Sepal Width") +
   ggtitle("Sepal Length-Width")
+
+ggsave(plot,
+       filename = "figures/plot_iris.png")
+
 ```
 
